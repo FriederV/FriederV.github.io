@@ -353,7 +353,6 @@ const all_fonts = [
   "'Bangers', cursive",
   "'Black Ops One', cursive",
   "'Creepster', cursive",
-  "'Foldit', cursive",
   "'Libre Barcode 39 Extended Text', cursive",
   "'Orbitron', sans-serif",
   "'Playfair Display SC', serif",
