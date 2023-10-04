@@ -624,11 +624,10 @@ PROJECT STYLING */
 .about_person{
   
   width: 25%;
-  padding-bottom:20px;
   padding-right:40px;
   display:flex;
   border-left: dotted;
-  border-width: 1px;
+  border-width: 2px;
 }
 
 .about_person_name{
@@ -641,16 +640,28 @@ PROJECT STYLING */
   transition: 0.2s;
 
 }
-.about_person_name:hover{
+.about_person:hover .about_person_name{
   color:var(--color-hover);   
+}
+
+#about_maybeyou{
+  opacity:0;
+}
+
+#about_person_image_special {
+  border:3px;
+  border-style: dotted;
+
 }
 
 
 .about_person_image img{
+  
   width: 100%;
   height: 200%;
   object-fit: fit;
 }
+
 .about_description{
   font-family: var(--font-bold);
 }
@@ -793,26 +804,15 @@ PROJECT STYLING */
   padding-left:20px;
   padding-right: 20px;
   border-left: dotted;
-  border-width: 1px;
+  border-width: 2px;
   height:70%;
+
 
 }
 .person_detailed_text_container p{
   margin-top:0px;
 }
 
-.person_detailed_text_container_small{
-  width: 40%;
-  column-count: 1;
-  column-width: 20%; ;
-  font-family: var(--font-head);
-  font-weight: 100;
-  font-size: 1.5rem;
-  padding-left:20px;
-  padding-right: 20px;
-  border-left: dotted;
-  border-width: 1px;
-}
 
 
 .person_detailed_header{
@@ -840,4 +840,8 @@ PROJECT STYLING */
 
 .outsidelink:hover{
   color: var(--color-hover);
+}
+
+#about_maybeyou{
+  outline: 1px;
 }

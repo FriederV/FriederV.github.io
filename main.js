@@ -328,44 +328,60 @@ prevButtons.forEach(function (prevButton) {
 //------------------------------ ABOUT SECTION -----------------------
 
 document.addEventListener("DOMContentLoaded", function () {
-  // Get all elements with class 'about_person'
   const aboutPersons = document.querySelectorAll(".about_person");
-
-  // Get all elements with class 'person_detailed'
   const personDetailedElements = document.querySelectorAll(".person_detailed");
-
-  // Get the element with class 'about_header'
   const aboutHeader = document.querySelector(".about_header");
+
+  // Function to show person details based on index
+  function showPersonDetails(index) {
+    personDetailedElements.forEach((personDetailed) => {
+      personDetailed.style.display = "none";
+    });
+    if (personDetailedElements[index]) {
+      personDetailedElements[index].style.display = "flex";
+    }
+  }
+
+  // Function to handle click on about_person element
+  function handlePersonClick(index) {
+    aboutPersons.forEach((person) => {
+      person.style.display = "none";
+    });
+    showPersonDetails(index);
+    history.pushState({ index }, "", `#${index}`);
+  }
+
+  // Function to handle click on about_header element
+  function handleHeaderClick() {
+    aboutPersons.forEach((person) => {
+      person.style.display = "flex";
+    });
+    personDetailedElements.forEach((personDetailed) => {
+      personDetailed.style.display = "none";
+    });
+    history.pushState({ index: null }, "", "/");
+  }
+
+  // Event listener for popstate event
+  window.addEventListener("popstate", function (event) {
+    const index = event.state ? event.state.index : null;
+    if (index !== null) {
+      handlePersonClick(index);
+    } else {
+      handleHeaderClick();
+    }
+  });
 
   // Add a click event listener to each 'about_person'
   aboutPersons.forEach((person, index) => {
     person.addEventListener("click", function () {
-      // Hide all 'about_person' elements
-      aboutPersons.forEach((person) => {
-        person.style.display = "none";
-      });
-
-      // Show the corresponding 'person_detailed' element based on the clicked index
-      if (personDetailedElements[index]) {
-        personDetailedElements.forEach((personDetailed) => {
-          personDetailed.style.display = "none";
-        });
-        personDetailedElements[index].style.display = "flex";
-      }
+      handlePersonClick(index);
     });
   });
 
   // Add a click event listener to 'about_header'
   aboutHeader.addEventListener("click", function () {
-    // Show all 'about_person' elements
-    aboutPersons.forEach((person) => {
-      person.style.display = "flex";
-    });
-
-    // Hide all 'person_detailed' elements
-    personDetailedElements.forEach((personDetailed) => {
-      personDetailed.style.display = "none";
-    });
+    handleHeaderClick();
   });
 });
 
