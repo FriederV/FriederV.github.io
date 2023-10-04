@@ -177,55 +177,75 @@ spans4.forEach((span, index) => {
 
 //------------------------------- WORKS SECTION -------------------------
 
-// Event listeners for slideshow links
-var slideshowLinks = document.querySelectorAll('.slideshow-link');
+document.addEventListener('DOMContentLoaded', function () {
+  var slideshowLinks = document.querySelectorAll('.slideshow-link');
+  var slideshows = document.querySelectorAll('.slider');
+  var projectHeaders = document.querySelectorAll('.project_header');
 
-slideshowLinks.forEach(function (link) {
-  link.addEventListener('click', function (event) {
-    event.preventDefault();
-
-    var slideshowId = link.dataset.slideshow;
-    var selectedSlideshow = document.getElementById(slideshowId);
-    var linksContainer = link.parentNode;
-
-    // Hide all slideshows
-    var slideshows = document.querySelectorAll('.slider');
+  function showSlideshow(slideshowId) {
     slideshows.forEach(function (slideshow) {
-      slideshow.style.display = 'none';
+      slideshow.style.display = slideshow.id === slideshowId ? 'block' : 'none';
     });
+  }
 
-    // Show the selected slideshow
-    selectedSlideshow.style.display = 'block';
+  slideshowLinks.forEach(function (link) {
+    link.addEventListener('click', function (event) {
+      event.preventDefault();
 
-    // Hide the links container
-    linksContainer.style.display = 'none';
+      var slideshowId = link.dataset.slideshow;
+
+      // Update the URL without a page reload
+      history.pushState({ slideshowId: slideshowId }, '', '#' + slideshowId);
+
+      showSlideshow(slideshowId);
+
+      var linksContainer = link.parentNode;
+      linksContainer.style.display = 'none';
+    });
+  });
+
+  projectHeaders.forEach(function (header) {
+    header.addEventListener('click', function () {
+      var linksContainer = header.nextElementSibling;
+      var parentContainer = header.parentNode;
+
+      // Update the URL without a page reload
+      history.pushState({ slideshowId: null }, '', '#');
+
+      slideshows.forEach(function (slideshow) {
+        slideshow.style.display = 'none';
+      });
+
+      parentContainer.style.display = 'block';
+      linksContainer.style.display = 'block';
+    });
+  });
+
+  // Listen for the back/forward button events
+  window.addEventListener('popstate', function (event) {
+    var state = event.state;
+
+    if (state && state.slideshowId) {
+      showSlideshow(state.slideshowId);
+
+      // Show the corresponding links container
+      var linksContainer = document.querySelector('[data-slideshow="' + state.slideshowId + '"]').parentNode;
+      linksContainer.style.display = 'block';
+    } else {
+      slideshows.forEach(function (slideshow) {
+        slideshow.style.display = 'none';
+      });
+
+      projectHeaders.forEach(function (header) {
+        header.parentNode.style.display = 'block';
+        header.nextElementSibling.style.display = 'none';
+
+        // Show the links container for each project header
+        header.nextElementSibling.querySelector('.slideshow-link').parentNode.style.display = 'block';
+      });
+    }
   });
 });
-
-// Get the slideshow links and slideshows
-var slideshowLinks = document.querySelectorAll('.slideshow-link');
-var slideshows = document.querySelectorAll('.slider');
-var projectHeaders = document.querySelectorAll('.project_header');
-
-projectHeaders.forEach(function (header) {
-  header.addEventListener('click', function () {
-    var linksContainer = header.nextElementSibling;
-    var parentContainer = header.parentNode;
-    
-    // Show the links container
-    linksContainer.style.display = 'block';
-    
-    // Hide all slideshows
-    slideshows.forEach(function (slideshow) {
-      slideshow.style.display = 'none';
-    });
-    
-    // Show the parent container (to reveal the slideshow links)
-    parentContainer.style.display = 'block';
-  });
-});
-
-
 
 
 function showSlide(slideshow, index) {
