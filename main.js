@@ -1,6 +1,9 @@
 //-----------------------------CHECK DEVICE-----------------------
 
-
+const loader = document.getElementById("manifold");
+window.addEventListener("load", function(){
+  loader.style.opacity = "1";
+})
 
 
 //----------------------------- STARTEPAGE -------------------------
@@ -328,6 +331,9 @@ prevButtons.forEach(function (prevButton) {
 //------------------------------ ABOUT SECTION -----------------------
 
 document.addEventListener("DOMContentLoaded", function () {
+  // Store the original URL when the page is loaded
+  const originalUrl = window.location.href;
+
   const aboutPersons = document.querySelectorAll(".about_person");
   const personDetailedElements = document.querySelectorAll(".person_detailed");
   const aboutHeader = document.querySelector(".about_header");
@@ -348,7 +354,7 @@ document.addEventListener("DOMContentLoaded", function () {
       person.style.display = "none";
     });
     showPersonDetails(index);
-    history.pushState({ index }, "", `#${index}`);
+    history.pushState({ personIndex: index, page: 'person' }, "", `#${index}`);
   }
 
   // Function to handle click on about_header element
@@ -359,17 +365,59 @@ document.addEventListener("DOMContentLoaded", function () {
     personDetailedElements.forEach((personDetailed) => {
       personDetailed.style.display = "none";
     });
-    history.pushState({ index: null }, "", "/");
+
+    // Update the history state for the home page without creating a new entry
+    const homeState = { page: 'home' };
+    history.replaceState(homeState, "", originalUrl);
   }
 
   // Event listener for popstate event
   window.addEventListener("popstate", function (event) {
-    const index = event.state ? event.state.index : null;
-    if (index !== null) {
-      handlePersonClick(index);
+    const state = event.state;
+    if (state) {
+      if (state.page === 'person') {
+        showPersonDetails(state.personIndex);
+      } else {
+        handleHeaderClick();
+      }
     } else {
+      // Handle initial load or navigating to a page without state
       handleHeaderClick();
     }
+
+    // Disable the browser forward button
+    history.pushState(null, '', originalUrl);
+    event.preventDefault();
+  });
+
+  // Event listener for pageshow event
+  window.addEventListener("pageshow", function (event) {
+    // Detect if pageshow event was due to forward navigation
+    if (event.persisted) {
+      // Use the popstate logic for forward navigation
+      const state = history.state;
+      if (state) {
+        if (state.page === 'person') {
+          showPersonDetails(state.personIndex);
+        } else {
+          aboutPersons.forEach((person) => {
+            person.style.display = "flex";
+          });
+          personDetailedElements.forEach((personDetailed) => {
+            personDetailed.style.display = "none";
+          });
+        }
+      } else {
+        // Handle initial load or navigating to a page without state
+        handleHeaderClick();
+      }
+    }
+  });
+
+  // Event listener for beforeunload event
+  window.addEventListener("beforeunload", function () {
+    // Clear the state when leaving the page
+    history.replaceState(null, "", originalUrl);
   });
 
   // Add a click event listener to each 'about_person'
@@ -384,6 +432,7 @@ document.addEventListener("DOMContentLoaded", function () {
     handleHeaderClick();
   });
 });
+
 
 // -------------------------------------- RANDOM NUMBERS -----------------------
 
