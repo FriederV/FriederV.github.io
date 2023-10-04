@@ -225,6 +225,9 @@ projectHeaders.forEach(function (header) {
   });
 });
 
+
+
+
 function showSlide(slideshow, index) {
   var slides = slideshow.querySelectorAll('.slide');
 
@@ -300,6 +303,8 @@ prevButtons.forEach(function (prevButton) {
 });
 
 
+
+
 //------------------------------ ABOUT SECTION -----------------------
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -369,12 +374,16 @@ const all_fonts = [
   "'Vina Sans', cursive"
 ];
 
+
+
 function random_font(all_fonts) {
   const random = Math.floor(Math.random() * all_fonts.length);
   return all_fonts[random];
 }
 
 const rot_letter = document.querySelectorAll('.rotating_letter');
+let currentIndex = 0;
+let isPulsing = true;
 
 function randomizeLetters() {
   rot_letter.forEach(rot => {
@@ -382,16 +391,44 @@ function randomizeLetters() {
   });
 }
 
-function changeRandomLetterFont() {
-  const randomIndex = Math.floor(Math.random() * rot_letter.length);
-  rot_letter[randomIndex].style.setProperty("font-family", random_font(all_fonts));
+function changeSequentialLetterFont() {
+  rot_letter[currentIndex].style.setProperty("font-family", random_font(all_fonts));
 
-  const randomInterval = Math.floor(Math.random() * 4000) + 1000; // Random interval between 1 and 5 seconds
-  setTimeout(changeRandomLetterFont, randomInterval);
+  currentIndex++;
+  if (currentIndex >= rot_letter.length) {
+    currentIndex = 0; // Reset index when all letters have been iterated
+  }
 }
 
-randomizeLetters();
-changeRandomLetterFont();
+function startPulsing() {
+  const pulseInterval = 100; // Time between each letter change in the pulse
+  const pulseDuration = pulseInterval * rot_letter.length;
+  const pauseInterval = 3000; // Pause time after each pulse (2 seconds in this example)
+
+  function pulse() {
+    let elapsed = 0;
+
+    const intervalId = setInterval(() => {
+      changeSequentialLetterFont();
+      elapsed += pulseInterval;
+
+      if (elapsed >= pulseDuration) {
+        clearInterval(intervalId);
+        setTimeout(pulse, pauseInterval);
+      }
+    }, pulseInterval);
+  }
+
+  // Only perform initial randomization once
+  randomizeLetters();
+
+  // Start pulsing after a short delay
+  setTimeout(() => {
+    pulse();
+  }, 500);
+}
+
+startPulsing();
 
 rot_letter.forEach(rot => {
   rot.addEventListener('mouseover', function () {
@@ -403,5 +440,3 @@ rot_letter.forEach(rot => {
     console.log('clicked');
   });
 });
-
-
