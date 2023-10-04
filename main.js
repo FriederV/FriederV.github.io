@@ -361,7 +361,6 @@ const all_fonts = [
   "'Libre Barcode 39 Extended Text', cursive",
   "'Orbitron', sans-serif",
   "'Playfair Display SC', serif",
-  "'Press Start 2P', cursive",
   "'Raleway Dots', cursive",
   "'Reenie Beanie', cursive",
   "'Roboto Mono', monospace",

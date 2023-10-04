@@ -90,7 +90,7 @@ a{
 #top_of_page{
   scroll-snap-align: start;
   display: flex;
-  align-items: center;
+  align-items: top;
   justify-content: space-between;
   height:20vh;
   width: 100%;
@@ -101,29 +101,26 @@ a{
 #manifold{
   display: flex;
   width: 50vw;
-  padding-left:10px;
-
-}
-
-.rotating_container{
-  width: 22vw;
-  display: flex;
-  justify-content: center;
+  height:1px;
+  align-items:baseline;
+  text-align: center;
 
 
  
 }
+#first{
+  height: 10rem;
+  width:10px;
+}
 
-.rotating_letter{
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 6rem;
-  line-height: 6rem;
+.rotating_letter{ 
+  width: 7vw;
+  overflow:hidden;
+  font-size: 5.5rem;
   z-index: 5;
   color:black;
-  transition: color 0.2s;
-  align-self: baseline;
-  
 }
+
 
 
 #top_links{
@@ -145,8 +142,13 @@ a{
     width: 100vw;
   }
   .rotating_letter{
-    font-size: 10rem;
+    width: 10%; 
+    font-size: 9rem;
     line-height:10rem;
+  }
+  #first{
+    height: 15rem;
+    width:10px;
   }
   #top_links{
     display:none;
@@ -328,7 +330,7 @@ PROJECT STYLING */
   left: 50%;
   top: 50%;
   transform: translate(110%, -50%);
-  max-width: 20%;
+  max-width: 20%; 
   z-index: 0;  
 
 } 
@@ -666,7 +668,7 @@ PROJECT STYLING */
   border-bottom:dotted;
  
  }
- .about_header{
+ .about_header h1{
   font-size: 8rem;
  }
  .about_person_name{
@@ -688,7 +690,7 @@ PROJECT STYLING */
     border-left:none;
     border-bottom:none;
    }
-   .about_header{
+   .about_header h1{
     font-size: 6rem;
    }
    .about_person_name{
