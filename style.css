@@ -112,7 +112,6 @@ a{
   opacity:0;
   transition: 1s;
   justify-content: space-between;
-  background-color: blue;
 
 
  
@@ -687,7 +686,7 @@ PROJECT STYLING */
   padding-top:50px;
   width: 80%;
   border-left:none;
-  border-bottom:dotted;
+  border-bottom:none;
  
  }
  .about_header h1{
@@ -733,24 +732,7 @@ PROJECT STYLING */
 
 }
 
-.insta{
-  position:absolute;
-  bottom:20px;
-  left:20px;
-  width:48px;
-  height:48px;
-  transition:0.2s;
 
-}
-
-.insta:hover{
-  transform: scale(1.1);
-}
-.insta img{
-  width:100%;
-  height:100%;
-  object-fit:scale-down;
-}
 
 /* Detailed Contact Descriptions */
 
@@ -760,7 +742,7 @@ PROJECT STYLING */
   position:absolute;
   width:100vw;
   height:100vh  ;
-  display: none;
+  display: none;  
   align-items: center;
   animation-name: fade-in;
   animation-duration: 1.5s;
@@ -770,6 +752,7 @@ PROJECT STYLING */
   
 
 }
+
 
 .person_detailed_img{
 
@@ -855,3 +838,22 @@ PROJECT STYLING */
 #about_maybeyou{
   outline: 1px;
 }
+
+@media screen and (max-width: 1000px) {
+  .person_detailed_img{
+
+    display: none ;
+  
+  }
+
+  .person_detailed_text_container{
+ 
+    font-family: var(--font-head);
+    font-weight: 100;
+    font-size: 4rem;
+
+  
+  
+
+}
+@media screen and (max-width: 1000px) and (orientation:landscape) {
