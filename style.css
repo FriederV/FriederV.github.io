@@ -109,7 +109,7 @@ a{
   height:1px;
   align-items:baseline;
   text-align: center;
-  opacity:0;
+  opacity:1;
   transition: 1s;
   justify-content: space-between;
 
@@ -122,9 +122,9 @@ a{
 }
 
 .rotating_letter{ 
-  width: 10vw;
+  width: 9vw;
   overflow:hidden;
-  font-size: 7rem;
+  font-size: 6rem;
   z-index: 5;
   color:black;
 }
@@ -393,6 +393,9 @@ PROJECT STYLING */
     font-size:5rem;
     line-height: 4;
   }
+  .project_hover_picture{
+    display:none
+  }
   .project_time h4{
     font-size:5rem;
     line-height: 4;
@@ -419,6 +422,9 @@ PROJECT STYLING */
   .project_name h2{
     font-size:4rem;
     line-height: 2;
+  }
+  .project_hover_picture{
+    display:none
   }
   .project_time h4{
     font-size:4rem;
@@ -639,8 +645,17 @@ PROJECT STYLING */
   border-width: 2px;
 }
 
+.person_short_description {
+  font-family: var(--font-bold);
+  font-weight: 200;
+  font-size: 1.2rem;
+  height:150px;
+  padding-top: 20px;
+}
+
 .about_person_name{
 
+  
   writing-mode:vertical-rl;
   text-orientation: sideways-right;
   font-size: 2.5rem;
@@ -699,6 +714,9 @@ PROJECT STYLING */
   font-size: 4rem;
   padding-bottom: 50px;
  }
+ .person_short_description{
+  display: none;
+ }
 }
 
 @media screen and (max-width: 1000px) and (orientation:landscape) {
@@ -719,6 +737,9 @@ PROJECT STYLING */
    }
    .about_description{
     font-size: 1rem;
+   }
+   .person_short_description{
+    display: none;
    }
 }
 
@@ -845,15 +866,32 @@ PROJECT STYLING */
     display: none ;
   
   }
+  
 
   .person_detailed_text_container{
- 
+    column-count: 1;
+    column-width: 100%;
     font-family: var(--font-head);
     font-weight: 100;
     font-size: 4rem;
 
   
-  
 
 }
+}
+
 @media screen and (max-width: 1000px) and (orientation:landscape) {
+  .person_detailed_img{
+
+    display: none ;
+  
+  }
+
+  .person_detailed_text_container{
+    column-count: 1;
+    column-width: 100%;
+    font-family: var(--font-head);
+    font-weight: 100;
+    font-size: 4rem;
+  }
+}

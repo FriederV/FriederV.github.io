@@ -1,10 +1,5 @@
 //-----------------------------CHECK DEVICE-----------------------
 
-const loader = document.getElementById("manifold");
-window.addEventListener("load", function(){
-  loader.style.opacity = "1";
-})
-
 
 //----------------------------- STARTEPAGE -------------------------
 
