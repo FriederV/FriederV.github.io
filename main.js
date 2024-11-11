@@ -431,83 +431,94 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // -------------------------------------- RANDOM NUMBERS -----------------------
 
-
 const all_fonts = [
-  "'Amatic SC', cursive",
-  "'Bad Script', cursive",
-  "'Bangers', cursive",
-  "'Black Ops One', cursive",
-  "'Creepster', cursive",
-  "'Libre Barcode 39 Extended Text', cursive",
-  "'Orbitron', sans-serif",
-  "'Playfair Display SC', serif",
-  "'Raleway Dots', cursive",
-  "'Reenie Beanie', cursive",
-  "'Roboto Mono', monospace",
-  "'Rubik Moonrocks', cursive",
-  "'Shadows Into Light', cursive",
-  "'Sigmar', cursive",
-  "'Silkscreen', cursive",
-  "'Tangerine', cursive",
-  "'Tilt Prism', cursive",
-  "'Vina Sans', cursive"
+  "Bangers",
+  "Black Ops",
+  "Libre Barcode 39 Extended Text",
+  "Playfair Display SC",
+  "Raleway Dots",
+  "'Roboto Mono'",
+  "Silkscreen",
+  "Vina Sans",
+  "Righteous",
+  "Kalam",
+  "Cormorant Garamond",
+  "Unlock",
+  "Lobster",
+  "Bebas Neue",
+  "Itim",
+  "Vesper Libre",
 ];
 
-
-
-function random_font(all_fonts) {
-  const random = Math.floor(Math.random() * all_fonts.length);
-  return all_fonts[random];
+// Function to pick a new font that's different from the previous one
+function random_font(all_fonts, previousFont) {
+  let newFont;
+  do {
+    const randomIndex = Math.floor(Math.random() * all_fonts.length);
+    newFont = all_fonts[randomIndex];
+  } while (newFont === previousFont); // Keep picking until we get a new font
+  return newFont;
 }
 
 const rot_letter = document.querySelectorAll('.rotating_letter');
 let currentIndex = 0;
-let isPulsing = true;
+const previousFonts = new Array(rot_letter.length).fill(null); // Track previous fonts for each letter
 
 function randomizeLetters() {
-  rot_letter.forEach(rot => {
-    rot.style.setProperty("font-family", random_font(all_fonts));
+  rot_letter.forEach((rot, index) => {
+    const newFont = random_font(all_fonts, previousFonts[index]);
+    rot.style.setProperty("font-family", newFont);
+    previousFonts[index] = newFont; // Update previous font for this letter
   });
 }
 
 function changeSequentialLetterFont() {
-  rot_letter[currentIndex].style.setProperty("font-family", random_font(all_fonts));
+  if (rot_letter.length === 0) return;
 
+  const currentElement = rot_letter[currentIndex];
+  const previousFont = previousFonts[currentIndex];
+
+  // Pick a new font different from the previous
+  const newFont = random_font(all_fonts, previousFont);
+  currentElement.style.setProperty("font-family", newFont);
+
+  // Update previous font for this element
+  previousFonts[currentIndex] = newFont;
+
+  // Move to the next letter
   currentIndex++;
   if (currentIndex >= rot_letter.length) {
-    currentIndex = 0; // Reset index when all letters have been iterated
+    currentIndex = 0; // Reset to the start after all letters are updated
   }
 }
 
 function startPulsing() {
-  const pulseInterval = 100; // Time between each letter change in the pulse
-  const pulseDuration = pulseInterval * rot_letter.length;
-  const pauseInterval = 3000; // Pause time after each pulse (2 seconds in this example)
+  const pulseInterval = 100; // Time between each letter change
+  const pauseInterval = 3000; // Pause duration after a full cycle
 
-  function pulse() {
-    let elapsed = 0;
+  let pulseActive = true;
 
-    const intervalId = setInterval(() => {
-      changeSequentialLetterFont();
-      elapsed += pulseInterval;
-
-      if (elapsed >= pulseDuration) {
-        clearInterval(intervalId);
-        setTimeout(pulse, pauseInterval);
-      }
-    }, pulseInterval);
-  }
-
-  // Only perform initial randomization once
+  // Randomize letters on load
   randomizeLetters();
 
-  // Start pulsing after a short delay
-  setTimeout(() => {
-    pulse();
-  }, 500);
+  // Pulsing effect loop
+  setInterval(() => {
+    if (pulseActive) {
+      changeSequentialLetterFont();
+
+      // After a full cycle, pause pulsing temporarily
+      if (currentIndex === 0) {
+        pulseActive = false;
+        setTimeout(() => { pulseActive = true; }, pauseInterval);
+      }
+    }
+  }, pulseInterval);
 }
 
 startPulsing();
+
+
+
 
 rot_letter.forEach(rot => {
   rot.addEventListener('mouseover', function () {
@@ -519,3 +530,9 @@ rot_letter.forEach(rot => {
     console.log('clicked');
   });
 });
+
+
+
+
+
+
