@@ -133,8 +133,9 @@ a{
 
 #placeholder{
   text-align: center;
+  padding-top:10%:
   width:50%;
-  height: 50%;
+  height: 40%;
 
   font-family: var(--font-head);
   font-size:1.2rem;
